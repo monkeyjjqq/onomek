@@ -1,33 +1,8 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
 import { Text } from "@chakra-ui/react";
-
-interface postAttachmentFiles {
-  name: string;
-  path: string;
-}
-
-interface fetchPostsResponse {
-  id: number;
-  user: number;
-  service: string;
-  title: string;
-  substring: string;
-  published: string;
-  file: postAttachmentFiles;
-  attachments: postAttachmentFiles[];
-}
+import usePosts from "../hooks/usePosts";
 
 function PostGrid() {
-  const [posts, setPosts] = useState<fetchPostsResponse[]>([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    apiClient
-      .get<fetchPostsResponse[]>("/posts")
-      .then((res) => setPosts(res.data))
-      .catch((error) => setError(error.message));
-  }, []);
+  const { posts, error } = usePosts();
   return (
     <>
       {error && <Text>{error}</Text>}
