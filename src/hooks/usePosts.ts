@@ -7,7 +7,7 @@ interface postAttachmentFiles {
   path: string;
 }
 
-interface fetchPostsResponse {
+export interface fetchPostsResponse {
   id: number;
   user: number;
   service: string;
@@ -29,7 +29,8 @@ const usePosts = () => {
       .get<fetchPostsResponse[]>("/posts", { signal: controller.signal })
       .then((res) => setPosts(res.data))
       .catch((error) => {
-        if (error instanceof CanceledError) return setError(error.message);
+        if (error instanceof CanceledError) return;
+        setError(error.message);
       });
     return () => controller.abort();
   }, []);
