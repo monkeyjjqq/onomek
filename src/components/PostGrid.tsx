@@ -1,9 +1,13 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
-import usePosts from "../hooks/usePosts";
 import PostCard from "./PostCard";
+import { fetchPostsResponse } from "../hooks/usePosts";
 
-function PostGrid() {
-  const { posts, error } = usePosts();
+interface Props {
+  posts: fetchPostsResponse[];
+  error: string;
+}
+
+function PostGrid({ posts, error }: Props) {
   return (
     <>
       {error && <Text>{error}</Text>}

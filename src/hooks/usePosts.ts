@@ -20,21 +20,27 @@ export interface fetchPostsResponse {
 
 const usePosts = () => {
   const [posts, setPosts] = useState<fetchPostsResponse[]>([]);
+  const [searchText, setSearchText] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
 
     apiClient
-      .get<fetchPostsResponse[]>("/posts", { signal: controller.signal })
+      .get<fetchPostsResponse[]>("/posts", {
+        signal: controller.signal,
+        params: {
+          q: searchText,
+        },
+      })
       .then((res) => setPosts(res.data))
       .catch((error) => {
         if (error instanceof CanceledError) return;
         setError(error.message);
       });
     return () => controller.abort();
-  }, []);
-  return { posts, error };
+  }, [searchText]);
+  return { posts, error, setSearchText };
 };
 
 export default usePosts;
