@@ -18,6 +18,10 @@ export interface fetchPostsResponse {
   attachments: postAttachmentFiles[];
 }
 
+export interface postsList {
+  posts: fetchPostsResponse[];
+}
+
 const usePosts = () => {
   const [posts, setPosts] = useState<fetchPostsResponse[]>([]);
   const [searchText, setSearchText] = useState("");
@@ -27,13 +31,13 @@ const usePosts = () => {
     const controller = new AbortController();
 
     apiClient
-      .get<fetchPostsResponse[]>("/posts", {
+      .get<postsList>("/posts", {
         signal: controller.signal,
         params: {
           q: searchText,
         },
       })
-      .then((res) => setPosts(res.data))
+      .then((res) => setPosts(res.data.posts))
       .catch((error) => {
         if (error instanceof CanceledError) return;
         setError(error.message);
