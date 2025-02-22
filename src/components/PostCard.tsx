@@ -16,7 +16,7 @@ interface Props {
 function PostCard({ post }: Props) {
   return (
     <Card borderRadius={10} overflow="hidden">
-      <Image src={getFullPathUrl(post.file.path)} />
+      <Image src={"/api/proxy?path=" + getFullPathUrl(post.file.path)} />
       <CardBody>
         <Heading fontSize="2xl" paddingBottom={3}>
           {post.title}
