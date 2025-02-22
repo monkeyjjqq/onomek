@@ -7,7 +7,7 @@ interface postAttachmentFiles {
   path: string;
 }
 
-export interface fetchPostsResponse {
+export interface postsList {
   id: number;
   user: number;
   service: string;
@@ -18,12 +18,18 @@ export interface fetchPostsResponse {
   attachments: postAttachmentFiles[];
 }
 
-export interface postsList {
-  posts: fetchPostsResponse[];
+export interface fetchPostsResponse {
+  count: number;
+  true_count: number;
+  posts: postsList[];
 }
 
 const usePosts = () => {
-  const [posts, setPosts] = useState<fetchPostsResponse[]>([]);
+  const [posts, setPosts] = useState<fetchPostsResponse>({
+    count: 0,
+    true_count: 0,
+    posts: [],
+  });
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState("");
 
@@ -31,13 +37,13 @@ const usePosts = () => {
     const controller = new AbortController();
 
     apiClient
-      .get<postsList>("/posts", {
+      .get<fetchPostsResponse>("/posts", {
         signal: controller.signal,
         params: {
           q: searchText,
         },
       })
-      .then((res) => setPosts(res.data.posts))
+      .then((res) => setPosts(res.data))
       .catch((error) => {
         if (error instanceof CanceledError) return;
         setError(error.message);

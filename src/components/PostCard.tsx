@@ -6,11 +6,11 @@ import {
   Heading,
   Image,
 } from "@chakra-ui/react";
-import { fetchPostsResponse } from "../hooks/usePosts";
+import { postsList } from "../hooks/usePosts";
 import getFullPathUrl from "../services/path-url";
 
 interface Props {
-  post: fetchPostsResponse;
+  post: postsList;
 }
 
 function PostCard({ post }: Props) {
