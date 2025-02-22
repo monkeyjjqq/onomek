@@ -2,22 +2,17 @@ import { SimpleGrid, Text } from "@chakra-ui/react";
 import PostCard from "./PostCard";
 import { fetchPostsResponse } from "../hooks/usePosts";
 import Pagination from "./Pagination";
-import { useState } from "react";
 
 interface Props {
   posts: fetchPostsResponse;
+  handlePageChange: (page: number) => void;
+  currentPage: number;
   error: string;
 }
 
-function PostGrid({ posts, error }: Props) {
-  console.log(posts);
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalItems = 100; // You can change this number for testing
-  const itemsPerPage = 1;
+function PostGrid({ posts, handlePageChange, currentPage, error }: Props) {
+  const itemsPerPage = 50;
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
   return (
     <>
       {error && <Text>{error}</Text>}
@@ -31,7 +26,7 @@ function PostGrid({ posts, error }: Props) {
         ))}
       </SimpleGrid>
       <Pagination
-        totalItems={totalItems}
+        totalItems={posts.true_count}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}

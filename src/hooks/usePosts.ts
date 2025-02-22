@@ -31,6 +31,7 @@ const usePosts = () => {
     posts: [],
   });
   const [searchText, setSearchText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -41,16 +42,19 @@ const usePosts = () => {
         signal: controller.signal,
         params: {
           q: searchText,
+          o: currentPage * 50,
         },
       })
-      .then((res) => setPosts(res.data))
+      .then((res) => {
+        setPosts(res.data);
+      })
       .catch((error) => {
         if (error instanceof CanceledError) return;
         setError(error.message);
       });
     return () => controller.abort();
-  }, [searchText]);
-  return { posts, error, setSearchText };
+  }, [searchText, currentPage]);
+  return { posts, error, setSearchText, currentPage, setCurrentPage };
 };
 
 export default usePosts;

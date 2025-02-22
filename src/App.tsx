@@ -4,11 +4,14 @@ import PostGrid from "./components/PostGrid";
 import usePosts from "./hooks/usePosts";
 
 function App() {
-  const { posts, error, setSearchText } = usePosts();
+  const { posts, error, setSearchText, currentPage, setCurrentPage } =
+    usePosts();
   const onSearch = (searchText: string) => {
     setSearchText(searchText);
   };
-
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   return (
     <>
       <Grid
@@ -24,7 +27,12 @@ function App() {
           <GridItem area="aside">aside</GridItem>
         </Show>
         <GridItem area="main">
-          <PostGrid posts={posts} error={error} />
+          <PostGrid
+            posts={posts}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+            error={error}
+          />
         </GridItem>
       </Grid>
     </>
