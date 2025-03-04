@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const { path } = req.query;
+  const { path, q, o } = req.query;
 
   try {
-    const response = await axios.get(path);
+    const response = await axios.get(path, { params: { q: q, o: o } });
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
   } catch (error) {
