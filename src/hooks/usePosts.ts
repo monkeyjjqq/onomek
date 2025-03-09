@@ -2,16 +2,17 @@ import { useState, useEffect } from "react";
 import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 
-interface postAttachmentFiles {
+export interface postAttachmentFiles {
   name: string;
   path: string;
 }
 
-export interface postsList {
+export interface postModel {
   id: number;
   user: number;
   service: string;
   title: string;
+  content: string;
   substring: string;
   published: string;
   file: postAttachmentFiles;
@@ -21,7 +22,7 @@ export interface postsList {
 export interface fetchPostsResponse {
   count: number;
   true_count: number;
-  posts: postsList[];
+  posts: postModel[];
 }
 
 const usePosts = () => {
