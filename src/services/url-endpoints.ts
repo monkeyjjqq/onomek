@@ -1,2 +1,2 @@
-//https://img.kemono.su/thumbnail/data (for thumbnail)
-//https://n3.kemono.su/data (for Actual image)
+//https://img.kemono.cr/thumbnail/data (for thumbnail)
+//https://n3.kemono.cr/data (for Actual image)

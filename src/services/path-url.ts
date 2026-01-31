@@ -1,5 +1,5 @@
 const getFullPathUrl = (pathUrl: string) => {
-  const baseUrl = "https://img.kemono.su/thumbnail/data";
+  const baseUrl = "https://img.kemono.cr/thumbnail/data";
   return baseUrl + pathUrl;
 };
 
